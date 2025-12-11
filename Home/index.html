@@ -27,12 +27,10 @@
       const month = String(d.getMonth() + 1).padStart(2, "0");
       const day = String(d.getDate()).padStart(2, "0");
       const year = d.getFullYear();
-
       let hours = d.getHours();
       const minutes = String(d.getMinutes()).padStart(2, "0");
       const ampm = hours >= 12 ? "PM" : "AM";
       hours = hours % 12 || 12;
-
       return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
     }
 
@@ -40,7 +38,6 @@
       let html = "<div class='table-wrapper'><table><tr class='header'>";
       header.forEach(h => html += `<td>${h}</td>`);
       html += "</tr>";
-
       body.forEach(row => {
         html += "<tr>";
         row.forEach((cell, i) => {
@@ -48,29 +45,32 @@
         });
         html += "</tr>";
       });
-
       html += "</table></div>";
       return html;
     }
 
-    fetch(sheetURL)
-      .then(res => res.text())
-      .then(csv => {
-        const rows = parseCSV(csv);
-        const header = rows[0];
-        const body = rows.slice(1);
-        const timestampIndex = header.indexOf("Timestamp");
+    function loadSheet() {
+      fetch(sheetURL)
+        .then(res => res.text())
+        .then(csv => {
+          const rows = parseCSV(csv);
+          const header = rows[0];
+          const body = rows.slice(1);
+          const timestampIndex = header.indexOf("Timestamp");
 
- 
-        body.sort((a,b) => parseTimestamp(b[timestampIndex]) - parseTimestamp(a[timestampIndex]));
+          body.sort((a,b) => parseTimestamp(b[timestampIndex]) - parseTimestamp(a[timestampIndex]));
 
-        document.getElementById("table-container").innerHTML =
-          buildTable(header, body, timestampIndex);
-      })
-      .catch(err => {
-        document.getElementById("table-container").textContent = "Error loading data.";
-        console.error(err);
-      });
+          document.getElementById("table-container").innerHTML =
+            buildTable(header, body, timestampIndex);
+        })
+        .catch(err => {
+          document.getElementById("table-container").textContent = "Error loading data.";
+          console.error(err);
+        });
+    }
+
+    loadSheet();
+    setInterval(loadSheet, 15000); // refresh every 15 seconds
   </script>
 
 </body>
