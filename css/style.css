@@ -47,29 +47,23 @@ tr:last-child td {
     border-bottom: none;
 }
 
-
 @media (max-width: 650px) {
     .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
-
     table {
         width: 200%;
         min-width: 200%;
         border-radius: 6px;
     }
-
     td {
         padding: 10px 8px;
         font-size: 0.85rem;
     }
-
     body {
         padding: 8px;
     }
-
-
     .table-wrapper::after {
         content: "";
         position: absolute;
