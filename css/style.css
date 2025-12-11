@@ -10,23 +10,29 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Responsive table container */
+/* Main container */
 #table-container {
     width: 100%;
 }
 
-/* Table that always fits screen width */
+/* Table wrapper for mobile horizontal scroll */
+.table-wrapper {
+    width: 100%;
+    overflow-x: visible;         /* default: no scroll on desktop */
+}
+
+/* Base table (desktop normal) */
 table {
     width: 100%;
     border-collapse: collapse;
     background: #141417;
     color: #e0e0e0;
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
-    table-layout: fixed;       /* important: scales evenly */
+    table-layout: fixed;
 }
 
-/* Cell appearance */
+/* Table cells */
 td {
     padding: 12px 10px;
     border-bottom: 1px solid #2a2a2d;
@@ -34,14 +40,14 @@ td {
     word-wrap: break-word;
 }
 
-/* Header */
+/* Header row */
 .header td {
     background: #1f1f23;
-    color: #ffffff;
+    color: white;
     font-weight: 600;
 }
 
-/* Hover effect */
+/* Hover highlight */
 tr:hover td {
     background: #242428;
     transition: 0.12s ease-in-out;
@@ -52,15 +58,36 @@ tr:last-child td {
     border-bottom: none;
 }
 
-/* Mobile scaling */
-@media (max-width: 600px) {
-    td {
-        padding: 8px 6px;
-        font-size: 0.85rem;   /* scales text down */
+/* ─────────────────────────────
+   MOBILE MODE (scroll + double width)
+   ───────────────────────────── */
+@media (max-width: 650px) {
+    .table-wrapper {
+        overflow-x: auto;              /* enable scrolling */
+        -webkit-overflow-scrolling: touch;
     }
 
     table {
+        width: 200%;                   /* 2x horizontal room */
+        min-width: 200%;
         border-radius: 6px;
+    }
+
+    td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+
+    /* Scroll shadow to hint swipe */
+    .table-wrapper::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 25px;
+        height: 100%;
+        background: linear-gradient(to left, #0d0d0f, transparent);
+        pointer-events: none;
     }
 
     body {
