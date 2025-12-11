@@ -1,38 +1,30 @@
-/* Dark background */
 body {
     margin: 0;
     padding: 12px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: #0d0d0f;
     color: #eaeaea;
-
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Main container */
 #table-container {
     width: 100%;
 }
 
-/* Table wrapper for mobile horizontal scroll */
 .table-wrapper {
     width: 100%;
-    overflow-x: visible;         /* default: no scroll on desktop */
 }
 
-/* Base table (desktop normal) */
 table {
     width: 100%;
     border-collapse: collapse;
     background: #141417;
     color: #e0e0e0;
     border-radius: 10px;
-    overflow: hidden;
     table-layout: fixed;
 }
 
-/* Table cells */
 td {
     padding: 12px 10px;
     border-bottom: 1px solid #2a2a2d;
@@ -40,35 +32,30 @@ td {
     word-wrap: break-word;
 }
 
-/* Header row */
 .header td {
     background: #1f1f23;
     color: white;
     font-weight: 600;
 }
 
-/* Hover highlight */
 tr:hover td {
     background: #242428;
     transition: 0.12s ease-in-out;
 }
 
-/* Remove last border */
 tr:last-child td {
     border-bottom: none;
 }
 
-/* ─────────────────────────────
-   MOBILE MODE (scroll + double width)
-   ───────────────────────────── */
+/* Mobile adjustments */
 @media (max-width: 650px) {
     .table-wrapper {
-        overflow-x: auto;              /* enable scrolling */
+        overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
     table {
-        width: 200%;                   /* 2x horizontal room */
+        width: 200%;
         min-width: 200%;
         border-radius: 6px;
     }
@@ -78,7 +65,11 @@ tr:last-child td {
         font-size: 0.85rem;
     }
 
-    /* Scroll shadow to hint swipe */
+    body {
+        padding: 8px;
+    }
+
+    /* Scroll shadow */
     .table-wrapper::after {
         content: "";
         position: absolute;
@@ -88,9 +79,5 @@ tr:last-child td {
         height: 100%;
         background: linear-gradient(to left, #0d0d0f, transparent);
         pointer-events: none;
-    }
-
-    body {
-        padding: 8px;
     }
 }
